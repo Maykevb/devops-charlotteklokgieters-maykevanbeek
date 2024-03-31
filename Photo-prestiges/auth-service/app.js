@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/auth', authRoutes);
 
 // MongoDB-verbinding
-mongoose.connect('mongodb://localhost:27017/auth-service', {
+mongoose.connect('mongodb://localhost:27017/devops-auth-service', {
 }).then(() => console.log('MongoDB Connected'))
     .catch(err => console.log(err));
 
@@ -60,7 +60,7 @@ async function connectToRabbitMQ() {
 connectToRabbitMQ();
 
 // Het opstarten van de server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.AUTHPORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server gestart op poort ${PORT}`);
 });

@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({path: '../.env'});
 
 const express = require('express');
 const router = express.Router();
@@ -32,10 +32,9 @@ router.post('/register', verifyToken, async (req, res) => {
     try {
         const { username, email, password, role } = req.body;
 
-        let user = await User.findOne({ email });
+        let user = await User.findOne({ username });
         if (user) {
-            res.json({ msg: 'Gebruiker bestaat al' });
-            return res.status(400);
+            return res.status(400).json({ msg: 'Gebruiker bestaat al' });
         }
 
         user = new User({
@@ -61,6 +60,18 @@ router.post('/register', verifyToken, async (req, res) => {
         }
 
         res.json({ msg: 'Gebruiker succesvol geregistreerd' });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Serverfout');
+    }
+});
+
+// Route voor het ophalen van al de gebruikers
+router.get('/get', verifyToken, async (req, res) => {
+    try {
+        const users = await User.find().select('-password -__v');
+
+        res.json(users);
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Serverfout');
