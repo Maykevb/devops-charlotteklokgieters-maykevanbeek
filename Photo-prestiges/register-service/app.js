@@ -12,8 +12,8 @@ app.use('/users', usersRoutes)
 
 // MongoDB-verbinding
 mongoose.connect('mongodb://localhost:27017/devops-register-service')
-    .then(() => console.log('MongoDB Connected!'))
-    .catch(err => console.log(err));
+    .then(() => console.log('MongoDB Connected'))
+    .catch(err => console.log(err))
 
 // Het opstarten van de server
 const PORT = process.env.REGISTERPORT || 4000
