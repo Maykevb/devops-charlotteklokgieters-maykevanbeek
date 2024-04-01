@@ -9,6 +9,6 @@ Welkom bij ons WEBS5-project! Hieronder vind je de status van de services:
 ### Register Service 
 [![Register Jest Code Coverage](https://github.com/Maykevb/devops-charlotteklokgieters-maykevanbeek/actions/workflows/register-jest-coverage.yml/badge.svg)](https://github.com/Maykevb/devops-charlotteklokgieters-maykevanbeek/actions/workflows/register-jest-coverage.yml)
 
-Onze Register Service bevat tests die worden uitgevoerd met Jest, en we houden de code coverage bij om de kwaliteit van onze tests te waarborgen.
-
 ### Auth Service
+
+Beide de register-service en auth-service bevat tests die worden uitgevoerd met Jest, de code coverage wordt bijgehouden voor het waarborgen van kwaliteit.
