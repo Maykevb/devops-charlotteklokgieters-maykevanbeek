@@ -1,11 +1,10 @@
-# Avans 2324 - Webs5 Project
-Door: Charlotte Klokgieters en Mayke van Beek
+# Avans 2324 - WEBS5 Project
+Charlotte Klokgieters (2181757) en Mayke van Beek (2195606)
 
 ## Algemeen 
-
 [![Lint Code Analyses](https://github.com/Maykevb/devops-charlotteklokgieters-maykevanbeek/actions/workflows/lint-code-analyses.yml/badge.svg)](https://github.com/Maykevb/devops-charlotteklokgieters-maykevanbeek/actions/workflows/lint-code-analyses.yml)
 
-Welkom bij ons Webs5-project! Hieronder vind je de status van de services:
+Welkom bij ons WEBS5-project! Hieronder vind je de status van de services:
 
 ### Register Service 
 [![Register Jest Code Coverage](https://github.com/Maykevb/devops-charlotteklokgieters-maykevanbeek/actions/workflows/register-jest-coverage.yml/badge.svg)](https://github.com/Maykevb/devops-charlotteklokgieters-maykevanbeek/actions/workflows/register-jest-coverage.yml)
