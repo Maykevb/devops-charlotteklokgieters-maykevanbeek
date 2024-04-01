@@ -8,7 +8,6 @@ const User = require('./models/User')
 const bcrypt = require('bcryptjs')
 const db = mongoose.connection
 const app = express()
-const url = process.env.REGISTER_MONGO_URL
 const amqpUrl = process.env.AMQP_URL
 
 app.use(express.json())
@@ -16,7 +15,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use('/auth', authRoutes)
 
 // MongoDB-verbinding
-mongoose.connect(url, {})
+mongoose.connect('mongodb://localhost:27017/devops-auth-service', {})
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.log(err))
 
