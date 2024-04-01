@@ -18,6 +18,7 @@ jest.mock('amqplib', () => ({
 
 describe('User tests', () => {
     beforeAll(async () => {
+        await new Promise(resolve => setTimeout(() => resolve(), 1500))
         await user.deleteMany({ username: 'testuser' })
     })
 
