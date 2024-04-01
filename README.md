@@ -1,4 +1,4 @@
-# Avans 2324 - WEBS5 Project
+# Avans 2324 - WEBS5
 Charlotte Klokgieters (2181757) en Mayke van Beek (2195606)
 
 Welkom bij ons WEBS5-project! Hieronder vind je de status van de services:
