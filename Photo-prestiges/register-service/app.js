@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const usersRoutes = require('./routes/users');
+const db = mongoose.connection;
 const app = express();
 
 app.use(express.json());
@@ -17,3 +18,6 @@ const PORT = process.env.REGISTERPORT || 4000;
 app.listen(PORT, () => {
     console.log(`Server gestart op poort ${PORT}`);
 });
+
+module.exports = { app, db };
+

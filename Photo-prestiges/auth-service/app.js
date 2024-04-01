@@ -4,6 +4,7 @@ const authRoutes = require('./routes/auth');
 const amqp = require('amqplib');
 const User = require('./models/User');
 const bcrypt = require('bcryptjs');
+const db = mongoose.connection;
 const app = express();
 
 app.use(express.json());
@@ -64,3 +65,5 @@ const PORT = process.env.AUTHPORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server gestart op poort ${PORT}`);
 });
+
+module.exports = { app, db };
