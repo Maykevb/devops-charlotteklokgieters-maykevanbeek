@@ -1,0 +1,30 @@
+name: register-jest-code-coverage
+
+on:
+  push:
+    paths: [ 'register-service/**' ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./register-service
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Jest with code coverage for register-service
+        run: |
+          npm run test -- --coverage
+        working-directory: ./DEV-W1
+        env:
+          COVERAGE_THRESHOLD: 70
+       
