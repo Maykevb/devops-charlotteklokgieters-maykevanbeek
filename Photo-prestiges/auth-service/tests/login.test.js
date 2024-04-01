@@ -22,7 +22,7 @@ jest.mock('amqplib', () => ({
 describe('Login tests', () => {
     beforeAll(async () => {
         await new Promise(resolve => setTimeout(() => resolve(), 1500))
-        
+
         const plainPassword = 'testpassword'
         const hashedPassword = await bcrypt.hash(plainPassword, 10)
 
