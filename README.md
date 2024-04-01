@@ -1,5 +1,5 @@
 # Avans 2324 - Webs5 Project
-## Door: Charlotte Klokgieters en Mayke van Beek
+Door: Charlotte Klokgieters en Mayke van Beek
 
 ## Algemeen 
 
