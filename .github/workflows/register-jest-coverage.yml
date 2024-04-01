@@ -24,7 +24,6 @@ jobs:
       - name: Run Jest with code coverage for register-service
         run: |
           npm run test -- --coverage
-        working-directory: ./DEV-W1
         env:
           COVERAGE_THRESHOLD: 70
        
