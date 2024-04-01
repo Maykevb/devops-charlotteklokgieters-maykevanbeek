@@ -2,7 +2,7 @@ name: register-jest-code-coverage
 
 on:
   push:
-    paths: [ 'register-service/**' ]
+    paths: [ 'Photo-prestiges/register-service/**' ]
   pull_request:
     branches: [ "master" ]
 
@@ -12,7 +12,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./register-service
+        working-directory: ./Photo-prestiges/register-service
 
     steps:
       - name: Checkout code
