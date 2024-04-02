@@ -24,4 +24,4 @@ jobs:
       - name: Run Jest for register-service
         run: npm test
         env:
-          REGISTER_MONGO_URL: mongodb://localhost:27017/devops-register-service
+          REGISTER_MONGO_URL: mongodb://mongodb:27017/devops-register-service

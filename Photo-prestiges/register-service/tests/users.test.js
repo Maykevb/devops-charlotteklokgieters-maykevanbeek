@@ -1,7 +1,10 @@
 const request = require('supertest')
-const { app, db } = require('../app')
-const user = require('../models/User')
-const { beforeAll, afterAll } = require('@jest/globals')
+const app = require('../app.js')
+const { connect, close, clear } = require('./config/database.js')
+const User = require('../models/User')
+const { afterEach, beforeAll, afterAll } = require('@jest/globals')
+
+const agent = request.agent(app, {})
 
 jest.mock('amqplib', () => ({
     connect: jest.fn(() => Promise.resolve({
@@ -17,15 +20,11 @@ jest.mock('amqplib', () => ({
 }))
 
 describe('User tests', () => {
-    beforeAll(async () => {
-        await user.deleteMany({ username: 'testuser' })
-    }, 10000)
+    beforeAll(async () => await connect())
 
-    afterAll(async () => {
-        await user.deleteMany({ username: 'testuser' })
-        await new Promise(resolve => setTimeout(() => resolve(), 5500))
-        await db.close()
-    }, 10000)
+    afterEach(async () => await clear())
+
+    afterAll(async () => await close())
 
     describe('Register user', () => {
         it('should return 200 and a success message when registering a new user', async () => {
@@ -36,10 +35,9 @@ describe('User tests', () => {
                 role: 'participant'
             }
 
-            const res = await request(app)
+            const res = await agent
                 .post('/users/register')
                 .send(user)
-                .set('Gateway', process.env.GATEWAY_TOKEN)
 
             expect(res.statusCode).toEqual(200)
             expect(res.body.msg).toEqual('Gebruiker succesvol geregistreerd')
@@ -48,9 +46,17 @@ describe('User tests', () => {
 
     describe('Get all users', () => {
         test('should return 200 and an array of users with testuser in it', async () => {
-            const res = await request(app)
+            const user = {
+                username: 'testuser',
+                email: 'test@example.com',
+                password: 'testpassword',
+                role: 'participant'
+            }
+
+            await new User(user)
+
+            const res = await agent
                 .get('/users/get')
-                .set('Gateway', process.env.GATEWAY_TOKEN)
 
             const testUser = res.body.find(u => u.username === 'testuser')
 
