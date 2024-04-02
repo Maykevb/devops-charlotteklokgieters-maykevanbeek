@@ -19,13 +19,13 @@ jest.mock('amqplib', () => ({
 describe('User tests', () => {
     beforeAll(async () => {
         await user.deleteMany({ username: 'testuser' })
-    })
+    }, 10000)
 
     afterAll(async () => {
         await user.deleteMany({ username: 'testuser' })
         await new Promise(resolve => setTimeout(() => resolve(), 5500))
         await db.close()
-    })
+    }, 10000)
 
     describe('Register user', () => {
         it('should return 200 and a success message when registering a new user', async () => {
