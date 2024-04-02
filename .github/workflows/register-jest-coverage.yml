@@ -25,5 +25,5 @@ jobs:
         run: |
           npm run test -- --coverage
         env:
+          REGISTER_MONGO_URL: mongodb://mongodb:27017/devops-register-service
           COVERAGE_THRESHOLD: 70
-       
