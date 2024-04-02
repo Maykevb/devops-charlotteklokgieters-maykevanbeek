@@ -8,57 +8,42 @@ services:
     labels:
       NAME: "rabbitmq"
     ports:
-      - "4369:4369"
-      - "5671:5671"
-      - "5672:5672"
-      - "25672:25672"
-    healthcheck:
-      test: [ "CMD", "rabbitmqctl", "status" ]
-      interval: 10s
-      timeout: 5s
-      retries: 3
+      - "15672:15672"
 
   mongodb:
-    image: mongo
+    image: mongo:latest
     restart: always
     volumes:
       - mongodb_data:/data/db
+    ports:
+      - "27017:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
-    networks:
-      - app-network
 
   register-service:
     build:
       context: ./register-service
       dockerfile: Dockerfile-RegisterService
     ports:
-      - "17001:4000"
-    networks:
-      - app-network
+      - "4000:4000"
     depends_on:
       - mongodb
       - rabbitmq
-    environment:
-      - MONGO_URI=mongodb://localhost:27017/devops-register-service
+    env_file:
+      .env
 
   auth-service:
     build:
       context: ./auth-service
       dockerfile: Dockerfile-AuthService
     ports:
-      - "17000:3000"
-    networks:
-      - app-network
+      - "3000:3000"
     depends_on:
       - mongodb
       - rabbitmq
-    environment:
-      - MONGO_URI=mongodb://localhost:27017/devops-auth-service
-
-networks:
-  app-network:
+    env_file:
+      .env
 
 volumes:
   mongodb_data:

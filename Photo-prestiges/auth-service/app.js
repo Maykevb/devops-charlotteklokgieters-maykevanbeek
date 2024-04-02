@@ -9,14 +9,17 @@ const bcrypt = require('bcryptjs')
 const db = mongoose.connection
 const app = express()
 const amqpUrl = process.env.AMQP_URL
+const url = process.env.AUTH_MONGO_URL
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use('/auth', authRoutes)
 
 // MongoDB-verbinding
-mongoose.connect('mongodb://localhost:27017/devops-auth-service', {})
-    .then(() => console.log('MongoDB Connected'))
+mongoose.connect(url, {})
+    .then(() => {
+        console.log('MongoDB Connected')
+    })
     .catch(err => console.log(err))
 
 // RabbitMQ-verbinding
