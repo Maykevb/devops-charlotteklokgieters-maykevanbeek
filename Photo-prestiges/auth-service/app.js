@@ -60,7 +60,10 @@ async function connectToRabbitMQ () {
 
         console.log('Verbonden met RabbitMQ')
     } catch (error) {
-        console.error('Fout bij verbinden met RabbitMQ:', error)
+        console.error('Error connecting to RabbitMQ:', error)
+        console.log('Retrying connection in 5 seconds...')
+        await new Promise(resolve => setTimeout(resolve, 10000))
+        await connectToRabbitMQ()
     }
 }
 

@@ -5,7 +5,6 @@ const router = express.Router()
 const bcrypt = require('bcryptjs')
 const User = require('../models/User')
 const amqp = require('amqplib')
-const gatewayToken = process.env.GATEWAY_TOKEN
 let channel = null
 const amqpUrl = process.env.AMQP_URL
 
@@ -25,11 +24,14 @@ async function connectToRabbitMQ () {
         console.log('Verbonden met RabbitMQ')
     } catch (error) {
         console.error('Error connecting to RabbitMQ:', error)
+        console.log('Retrying connection in 5 seconds...')
+        await new Promise(resolve => setTimeout(resolve, 10000))
+        await connectToRabbitMQ()
     }
 }
 
 // Route voor het registreren van een nieuwe gebruiker
-router.post('/register', verifyToken, async (req, res) => {
+router.post('/register', async (req, res) => {
     try {
         const { username, email, password, role } = req.body
 
@@ -68,7 +70,7 @@ router.post('/register', verifyToken, async (req, res) => {
 })
 
 // Route voor het ophalen van al de gebruikers
-router.get('/get', verifyToken, async (req, res) => {
+router.get('/get', async (req, res) => {
     try {
         const users = await User.find().select('-password -__v')
 
@@ -78,20 +80,6 @@ router.get('/get', verifyToken, async (req, res) => {
         res.status(500).send('Serverfout')
     }
 })
-
-// Middleware om te controleren of het verzoek via de gateway komt
-function verifyToken (req, res, next) {
-    const token = req.header('Gateway')
-
-    if (!token || token !== gatewayToken) {
-        console.log('Unauthorized access detected.')
-        return res.status(401).json({ msg: 'Ongeautoriseerde toegang' })
-    } else {
-        console.log('Access granted.')
-    }
-
-    next()
-}
 
 connectToRabbitMQ()
 

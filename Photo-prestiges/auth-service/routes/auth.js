@@ -5,10 +5,9 @@ const router = express.Router()
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
-const gatewayToken = process.env.GATEWAY_TOKEN
 
 // Route voor het inloggen van een gebruiker
-router.post('/login', verifyToken, async (req, res) => {
+router.post('/login', async (req, res) => {
     try {
         const { username, password } = req.body
 
@@ -68,20 +67,6 @@ function checkRole (role) {
     }
 
     return secretKey
-}
-
-// Middleware om te controleren of het verzoek via de gateway komt
-function verifyToken (req, res, next) {
-    const token = req.header('Gateway')
-
-    if (!token || token !== gatewayToken) {
-        console.log('Unauthorized access detected.')
-        return res.status(401).json({ msg: 'Ongeautoriseerde toegang' })
-    } else {
-        console.log('Access granted')
-    }
-
-    next()
 }
 
 module.exports = router
