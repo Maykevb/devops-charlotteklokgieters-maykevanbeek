@@ -23,7 +23,7 @@ describe('User tests', () => {
 
     afterAll(async () => {
         await user.deleteMany({ username: 'testuser' })
-        await new Promise(resolve => setTimeout(() => resolve(), 1500))
+        await new Promise(resolve => setTimeout(() => resolve(), 5500))
         await db.close()
     })
 
