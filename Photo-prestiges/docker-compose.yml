@@ -30,8 +30,12 @@ services:
     depends_on:
       - mongodb
       - rabbitmq
-    env_file:
-      .env
+    environment:
+      REGISTERPORT: 4000
+      JWT_SECRET_PARTICIPANT: participant
+      JWT_SECRET_TARGETOWNER: targetowner
+      REGISTER_MONGO_URL: mongodb://mongodb:27017/devops-register-service
+      AMQP_URL: amqp://rabbitmq:5672
 
   auth-service:
     build:
@@ -42,8 +46,12 @@ services:
     depends_on:
       - mongodb
       - rabbitmq
-    env_file:
-      .env
+    environment:
+      AUTHPORT: 3000
+      JWT_SECRET_PARTICIPANT: participant
+      JWT_SECRET_TARGETOWNER: targetowner
+      AUTH_MONGO_URL: mongodb://mongodb:27017/devops-auth-service
+      AMQP_URL: amqp://rabbitmq:5672
 
 volumes:
   mongodb_data:

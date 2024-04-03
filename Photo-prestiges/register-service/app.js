@@ -16,10 +16,10 @@ if (process.env.NODE_ENV !== 'test') {
         .then(() => console.log('MongoDB Connected'))
         .catch(err => console.log(err))
 
-    app.set('port', process.env.APP_PORT || 4000)
+    app.set('port', process.env.REGISTERPORT || 4000)
 
     const server = http.createServer(app)
-    const port = process.env.APP_PORT || 4000
+    const port = process.env.REGISTERPORT || 4000
 
     server.listen(port, () => console.log(`Listening on port ${port}`))
 }
