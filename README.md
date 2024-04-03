@@ -9,7 +9,7 @@ Welkom bij ons WEBS5-project! Hieronder vind je de status van de services:
 [![Lint Code Analyses](https://github.com/Maykevb/devops-charlotteklokgieters-maykevanbeek/actions/workflows/lint-code-analyses.yml/badge.svg)](https://github.com/Maykevb/devops-charlotteklokgieters-maykevanbeek/actions/workflows/lint-code-analyses.yml)
 
 ### Register Service 
-[![Register Jest Code Coverage](https://github.com/Maykevb/devops-charlotteklokgieters-maykevanbeek/actions/workflows/register-jest-coverage.yml/badge.svg)](https://github.com/Maykevb/devops-charlotteklokgieters-maykevanbeek/actions/workflows/register-jest-coverage.yml)
+[![register-jest](https://github.com/Maykevb/devops-charlotteklokgieters-maykevanbeek/actions/workflows/register-jest.yml/badge.svg)](https://github.com/Maykevb/devops-charlotteklokgieters-maykevanbeek/actions/workflows/register-jest.yml)
 
 ### Auth Service
-
+[![auth-jest](https://github.com/Maykevb/devops-charlotteklokgieters-maykevanbeek/actions/workflows/auth-jest.yml/badge.svg)](https://github.com/Maykevb/devops-charlotteklokgieters-maykevanbeek/actions/workflows/auth-jest.yml)
