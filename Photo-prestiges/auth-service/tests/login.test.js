@@ -33,7 +33,7 @@ describe('Login tests', () => {
             username: 'testuser',
             email: 'test@example.com',
             password: hashedPassword,
-            role: 'participant'
+            role: 'targetOwner'
         })
 
         await user.save()
@@ -55,6 +55,8 @@ describe('Login tests', () => {
             const res = await request(app)
                 .post('/auth/login')
                 .send(userCredentials)
+
+            console.log(res.body)
 
             const decodedToken = jwt.decode(res.body.token)
 
