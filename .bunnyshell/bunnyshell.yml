@@ -1,7 +1,7 @@
 kind: Environment
-name: preview
+name: Productie-PhotoPrestiges
 type: primary
-urlHandle: urlpreview
+urlHandle: h53wga
 components:
   -
     kind: Application
