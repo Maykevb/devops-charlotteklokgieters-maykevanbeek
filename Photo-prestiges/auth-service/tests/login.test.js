@@ -1,9 +1,10 @@
 const request = require('supertest')
-const { app, db } = require('../app')
+const app = require('../app')
 const User = require('../models/User')
 const jwt = require('jsonwebtoken')
+const { connect, close, clear } = require('./config/database.js')
 const bcrypt = require('bcryptjs')
-const { beforeAll, afterAll } = require('@jest/globals')
+const { beforeEach, afterEach, beforeAll, afterAll } = require('@jest/globals')
 
 jest.mock('amqplib', () => ({
     connect: jest.fn(() => Promise.resolve({
@@ -21,6 +22,10 @@ jest.mock('amqplib', () => ({
 
 describe('Login tests', () => {
     beforeAll(async () => {
+        await connect()
+    })
+
+    beforeEach(async () => {
         const plainPassword = 'testpassword'
         const hashedPassword = await bcrypt.hash(plainPassword, 10)
 
@@ -34,11 +39,11 @@ describe('Login tests', () => {
         await user.save()
     })
 
-    afterAll(async () => {
-        await User.deleteMany({ username: 'testuser' })
-        await new Promise(resolve => setTimeout(() => resolve(), 1500))
-        await db.close()
+    afterEach(async () => {
+        await clear()
     })
+
+    afterAll(async () => await close())
 
     describe('Login user', () => {
         it('should return 200 and a JWT token when logging in with correct credentials', async () => {

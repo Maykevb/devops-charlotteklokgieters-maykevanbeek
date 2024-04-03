@@ -1,0 +1,27 @@
+name: register-jest
+
+on:
+  push:
+    paths: [ 'Photo-prestiges/register-service/**' ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./Photo-prestiges/register-service
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Jest for register-service
+        run: npm test
+        env:
+          REGISTER_MONGO_URL: mongodb://mongodb:27017/devops-register-service

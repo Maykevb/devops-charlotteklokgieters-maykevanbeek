@@ -12,15 +12,14 @@ app.use(express.urlencoded({ extended: false }))
 app.use('/users', usersRoutes)
 
 if (process.env.NODE_ENV !== 'test') {
-// MongoDB-verbinding
     mongoose.connect(url)
         .then(() => console.log('MongoDB Connected!'))
         .catch(err => console.log(err))
 
-    app.set('port', process.env.APP_PORT || 3000)
+    app.set('port', process.env.APP_PORT || 4000)
 
     const server = http.createServer(app)
-    const port = process.env.APP_PORT || 3000
+    const port = process.env.APP_PORT || 4000
 
     server.listen(port, () => console.log(`Listening on port ${port}`))
 }

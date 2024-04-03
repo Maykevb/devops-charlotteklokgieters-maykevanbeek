@@ -6,23 +6,15 @@ const authRoutes = require('./routes/auth')
 const amqp = require('amqplib')
 const User = require('./models/User')
 const bcrypt = require('bcryptjs')
-const db = mongoose.connection
 const app = express()
 const amqpUrl = process.env.AMQP_URL
 const url = process.env.AUTH_MONGO_URL
+const http = require('http')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use('/auth', authRoutes)
 
-// MongoDB-verbinding
-mongoose.connect(url, {})
-    .then(() => {
-        console.log('MongoDB Connected')
-    })
-    .catch(err => console.log(err))
-
-// RabbitMQ-verbinding
 async function connectToRabbitMQ () {
     try {
         const connection = await amqp.connect(amqpUrl)
@@ -67,12 +59,19 @@ async function connectToRabbitMQ () {
     }
 }
 
-connectToRabbitMQ()
+if (process.env.NODE_ENV !== 'test') {
+    mongoose.connect(url)
+        .then(() => console.log('MongoDB Connected!'))
+        .catch(err => console.log(err))
 
-// Het opstarten van de server
-const PORT = process.env.AUTHPORT || 3000
-app.listen(PORT, () => {
-    console.log(`Server gestart op poort ${PORT}`)
-})
+    connectToRabbitMQ()
 
-module.exports = { app, db }
+    app.set('port', process.env.APP_PORT || 3000)
+
+    const server = http.createServer(app)
+    const port = process.env.APP_PORT || 3000
+
+    server.listen(port, () => console.log(`Listening on port ${port}`))
+}
+
+module.exports = app

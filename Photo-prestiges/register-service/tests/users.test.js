@@ -53,10 +53,12 @@ describe('User tests', () => {
                 role: 'participant'
             }
 
-            await new User(user)
+            await User.create(user)
 
             const res = await agent
                 .get('/users/get')
+
+            console.log(res.body)
 
             const testUser = res.body.find(u => u.username === 'testuser')
 

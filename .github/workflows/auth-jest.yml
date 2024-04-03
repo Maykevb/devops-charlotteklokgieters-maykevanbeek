@@ -1,8 +1,8 @@
-name: register-jest-code-coverage
+name: auth-jest
 
 on:
   push:
-    paths: [ 'Photo-prestiges/register-service/**' ]
+    paths: [ 'Photo-prestiges/auth-service/**' ]
   pull_request:
     branches: [ "master" ]
 
@@ -12,7 +12,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./Photo-prestiges/register-service
+        working-directory: ./Photo-prestiges/auth-service
 
     steps:
       - name: Checkout code
@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run Jest for register-service
+      - name: Run Jest for auth-service
         run: npm test
         env:
-          REGISTER_MONGO_URL: mongodb://mongodb:27017/devops-register-service
+          REGISTER_MONGO_URL: mongodb://mongodb:27017/devops-auth-service
