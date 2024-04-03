@@ -1,9 +1,17 @@
 version: '3.8'
 
 services:
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus:/data/prometheus
+      - prometheus-data:/prometheus
+    ports:
+      - "9090:9090"
+    command: --web.enable-lifecycle --config.file=/data/prometheus/prometheus.yml
+
   rabbitmq:
     image: rabbitmq:latest
-    container_name: rabbitmq
     hostname: "rabbitmq"
     labels:
       NAME: "rabbitmq"
@@ -20,6 +28,13 @@ services:
     environment:
       MONGO_USERNAME: root
       MONGO_PASSWORD: root
+
+  db-exporter:
+    image: bitnami/mongodb-exporter:latest
+    environment:
+      - MONGODB_URI=mongodb://root:root@mongodb:27017
+    depends_on:
+      - mongodb
 
   register-service:
     build:
@@ -54,4 +69,5 @@ services:
       AMQP_URL: amqp://rabbitmq:5672
 
 volumes:
+  prometheus-data:
   mongodb_data:

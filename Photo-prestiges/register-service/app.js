@@ -6,9 +6,19 @@ const usersRoutes = require('./routes/users')
 const app = express()
 const url = process.env.REGISTER_MONGO_URL
 const http = require('http')
+const promBundle = require('express-prom-bundle')
+const metricsMiddleware = promBundle({
+    includePath: true,
+    includeStatusCode: true,
+    normalizePath: true,
+    promClient: {
+        collectDefaultMetrics: {}
+    }
+})
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+app.use(metricsMiddleware)
 app.use('/users', usersRoutes)
 
 if (process.env.NODE_ENV !== 'test') {

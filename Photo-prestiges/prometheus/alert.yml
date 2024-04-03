@@ -1,0 +1,16 @@
+groups:
+  - name: Alert register down
+    rules:
+      - alert: "On register down"
+        expr: up{job="register-service"} < 1
+        for: 10s
+  - name: Alert auth down
+    rules:
+      - alert: "On auth down"
+        expr: up{job="auth-service"} < 1
+        for: 10s
+  - name: Alert mongo down
+    rules:
+      - alert: "On mongo down"
+        expr: up{job="mongodb"} < 1
+        for: 10s

@@ -10,9 +10,19 @@ const app = express()
 const amqpUrl = process.env.AMQP_URL
 const url = process.env.AUTH_MONGO_URL
 const http = require('http')
+const promBundle = require('express-prom-bundle')
+const metricsMiddleware = promBundle({
+    includePath: true,
+    includeStatusCode: true,
+    normalizePath: true,
+    promClient: {
+        collectDefaultMetrics: {}
+    }
+})
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+app.use(metricsMiddleware)
 app.use('/auth', authRoutes)
 
 async function connectToRabbitMQ () {
