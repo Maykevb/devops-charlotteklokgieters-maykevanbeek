@@ -21,6 +21,7 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ msg: 'Ongeldig wachtwoord' })
         }
 
+        console.log(user.role)
         const secretKey = checkRole(user.role)
         if (!secretKey) {
             return res.status(422).json({ msg: 'De gebruiker heeft geen geldige rol' })
