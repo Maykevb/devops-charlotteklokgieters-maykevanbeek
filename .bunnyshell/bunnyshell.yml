@@ -1,0 +1,87 @@
+kind: Environment
+name: preview
+type: primary
+urlHandle: urlpreview
+components:
+  -
+    kind: Application
+    name: auth-service
+    gitRepo: 'https://github.com/Maykevb/devops-charlotteklokgieters-maykevanbeek.git'
+    gitBranch: master
+    gitApplicationPath: Photo-prestiges/auth-service
+    dockerCompose:
+      build:
+        context: ./Photo-prestiges/auth-service
+        dockerfile: Dockerfile-AuthService
+      environment:
+        AMQP_URL: 'amqp://rabbitmq:5672'
+        AUTH_MONGO_URL: 'mongodb://mongodb:27017/devops-auth-service'
+        AUTHPORT: '3000'
+        JWT_SECRET_PARTICIPANT: participant
+        JWT_SECRET_TARGETOWNER: targetowner
+      ports:
+        - '3000:3000'
+    hosts:
+      -
+        hostname: 'auth-service-{{ env.base_domain }}'
+        path: /
+        servicePort: 3000
+  -
+    kind: Database
+    name: mongodb
+    dockerCompose:
+      environment:
+        MONGO_PASSWORD: root
+        MONGO_USERNAME: root
+      image: 'mongo:latest'
+      ports:
+        - '27017:27017'
+      restart: always
+    volumes:
+      -
+        name: mongodb-data
+        mount: /data/db
+        subPath: ''
+  -
+    kind: Service
+    name: rabbitmq
+    dockerCompose:
+      hostname: rabbitmq
+      image: 'rabbitmq:latest'
+      labels:
+        NAME: rabbitmq
+      ports:
+        - '5672:5672'
+    hosts:
+      -
+        hostname: 'rabbitmq-{{ env.base_domain }}'
+        path: /
+        servicePort: 5672
+  -
+    kind: Application
+    name: register-service
+    gitRepo: 'https://github.com/Maykevb/devops-charlotteklokgieters-maykevanbeek.git'
+    gitBranch: master
+    gitApplicationPath: Photo-prestiges/register-service
+    dockerCompose:
+      build:
+        context: ./Photo-prestiges/register-service
+        dockerfile: Dockerfile-RegisterService
+      environment:
+        AMQP_URL: 'amqp://rabbitmq:5672'
+        JWT_SECRET_PARTICIPANT: participant
+        JWT_SECRET_TARGETOWNER: targetowner
+        REGISTER_MONGO_URL: 'mongodb://mongodb:27017/devops-register-service'
+        REGISTERPORT: '4000'
+      ports:
+        - '4000:4000'
+    hosts:
+      -
+        hostname: 'register-service-{{ env.base_domain }}'
+        path: /
+        servicePort: 4000
+volumes:
+  -
+    name: mongodb-data
+    size: 1Gi
+    type: disk
