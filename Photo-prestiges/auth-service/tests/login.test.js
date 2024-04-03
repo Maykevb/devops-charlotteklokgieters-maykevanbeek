@@ -55,7 +55,6 @@ describe('Login tests', () => {
             const res = await request(app)
                 .post('/auth/login')
                 .send(userCredentials)
-                .set('Gateway', process.env.GATEWAY_TOKEN)
 
             const decodedToken = jwt.decode(res.body.token)
 
@@ -73,7 +72,6 @@ describe('Login tests', () => {
             const res = await request(app)
                 .post('/auth/login')
                 .send(nonExistingUser)
-                .set('Gateway', process.env.GATEWAY_TOKEN)
 
             expect(res.statusCode).toEqual(400)
         })
@@ -87,7 +85,6 @@ describe('Login tests', () => {
             const res = await request(app)
                 .post('/auth/login')
                 .send(incorrectPasswordUser)
-                .set('Gateway', process.env.GATEWAY_TOKEN)
 
             expect(res.statusCode).toEqual(400)
         })
