@@ -61,12 +61,9 @@ services:
 
   prometheus:
     image: prom/prometheus:latest
-    volumes:
-      - ./prometheus:/etc/prometheus
-      - prometheus-data:/prometheus
     ports:
       - "9090:9090"
-    command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml
+    command: --web.enable-lifecycle
     restart: unless-stopped
     depends_on:
       - register-service
