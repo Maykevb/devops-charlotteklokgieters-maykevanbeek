@@ -7,10 +7,6 @@ rule_files:
   - alert.yml
 
 scrape_configs:
-  - job_name: 'mongodb'
-    static_configs:
-      - targets: ['db-exporter:27017']
-
   - job_name: 'register-service'
     static_configs:
       - targets: ['register-service:4000']

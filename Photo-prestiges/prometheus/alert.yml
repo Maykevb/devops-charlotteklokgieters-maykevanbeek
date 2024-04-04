@@ -9,8 +9,3 @@ groups:
       - alert: "On auth down"
         expr: up{job="auth-service"} < 1
         for: 10s
-  - name: Alert mongo down
-    rules:
-      - alert: "On mongo down"
-        expr: up{job="mongodb"} < 1
-        for: 10s
