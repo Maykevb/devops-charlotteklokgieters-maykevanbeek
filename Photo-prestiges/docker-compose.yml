@@ -57,16 +57,21 @@ services:
       context: ./auth-service
       dockerfile: Dockerfile-AuthService
     ports:
-      - "3000:3000"
+      - "5000:5000"
     depends_on:
       - mongodb
       - rabbitmq
     environment:
-      AUTHPORT: 3000
+      AUTHPORT: 5000
       JWT_SECRET_PARTICIPANT: participant
       JWT_SECRET_TARGETOWNER: targetowner
       AUTH_MONGO_URL: mongodb://mongodb:27017/devops-auth-service
       AMQP_URL: amqp://rabbitmq:5672
+
+  grafana:
+    build: ./grafana
+    ports:
+      - "3000:3000"
 
 volumes:
   prometheus-data:

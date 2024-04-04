@@ -76,10 +76,10 @@ if (process.env.NODE_ENV !== 'test') {
 
     connectToRabbitMQ()
 
-    app.set('port', process.env.AUTHPORT || 3000)
+    app.set('port', process.env.AUTHPORT || 5000)
 
     const server = http.createServer(app)
-    const port = process.env.AUTHPORT || 3000
+    const port = process.env.AUTHPORT || 5000
 
     server.listen(port, () => console.log(`Listening on port ${port}`))
 }

@@ -16,16 +16,16 @@ components:
       environment:
         AMQP_URL: 'amqp://rabbitmq:5672'
         AUTH_MONGO_URL: 'mongodb://mongodb:27017/devops-auth-service'
-        AUTHPORT: '3000'
+        AUTHPORT: '5000'
         JWT_SECRET_PARTICIPANT: participant
         JWT_SECRET_TARGETOWNER: targetowner
       ports:
-        - '3000:3000'
+        - '5000:5000'
     hosts:
       -
         hostname: 'auth-service-{{ env.base_domain }}'
         path: /
-        servicePort: 3000
+        servicePort: 5000
   -
     kind: Database
     name: mongodb
