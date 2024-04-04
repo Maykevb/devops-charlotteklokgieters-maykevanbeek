@@ -60,10 +60,9 @@ services:
       AMQP_URL: amqp://rabbitmq:5672
 
   prometheus:
-    image: prom/prometheus:latest
+    build: ./prometheus
     volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-      - ./prometheus/alert.yml:/etc/prometheus/alert.yml
+      - prometheus-data:/prometheus
     ports:
       - "9090:9090"
     command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml
