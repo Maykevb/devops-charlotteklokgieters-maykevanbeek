@@ -60,7 +60,7 @@ async function connectToRabbitMQ () {
             }
         }, { noAck: true })
 
-        console.log('Verbonden met RabbitMQ')
+        console.log('Verbonden met RabbitMQ!')
     } catch (error) {
         console.error('Error connecting to RabbitMQ:', error)
         console.log('Retrying connection in 5 seconds...')
