@@ -28,30 +28,6 @@ components:
         servicePort: 5000
   -
     kind: Database
-    name: db-exporter
-    dockerCompose:
-      environment:
-        MONGODB_URI: 'mongodb://root:root@mongodb:27017'
-      image: 'bitnami/mongodb-exporter:latest'
-  -
-    kind: Application
-    name: grafana
-    gitRepo: 'https://github.com/Maykevb/devops-charlotteklokgieters-maykevanbeek.git'
-    gitBranch: master
-    gitApplicationPath: Photo-prestiges/grafana
-    dockerCompose:
-      build:
-        context: ./Photo-prestiges/grafana
-        dockerfile: Dockerfile
-      ports:
-        - '3000:3000'
-    hosts:
-      -
-        hostname: 'grafana-{{ env.base_domain }}'
-        path: /
-        servicePort: 3000
-  -
-    kind: Database
     name: mongodb
     dockerCompose:
       environment:
@@ -65,27 +41,6 @@ components:
       -
         name: mongodb-data
         mount: /data/db
-        subPath: ''
-  -
-    kind: Service
-    name: prometheus
-    dockerCompose:
-      command:
-        - '--web.enable-lifecycle'
-        - '--config.file=/etc/prometheus/prometheus.yml'
-      image: 'prom/prometheus:latest'
-      ports:
-        - '9090:9090'
-      restart: unless-stopped
-    hosts:
-      -
-        hostname: 'prometheus-{{ env.base_domain }}'
-        path: /
-        servicePort: 9090
-    volumes:
-      -
-        name: prometheus-data
-        mount: /prometheus
         subPath: ''
   -
     kind: Service
@@ -128,9 +83,5 @@ components:
 volumes:
   -
     name: mongodb-data
-    size: 1Gi
-    type: disk
-  -
-    name: prometheus-data
     size: 1Gi
     type: disk
