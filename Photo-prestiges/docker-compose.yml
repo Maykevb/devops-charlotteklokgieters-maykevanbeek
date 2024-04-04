@@ -62,15 +62,16 @@ services:
   prometheus:
     image: prom/prometheus:latest
     volumes:
-      - ./prometheus:/data/prometheus
+      - ./prometheus:/etc/prometheus
       - prometheus-data:/prometheus
     ports:
       - "9090:9090"
-    command: --web.enable-lifecycle --config.file=/data/prometheus/prometheus.yml
+    command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml
+    restart: unless-stopped
     depends_on:
-      - mongodb
       - register-service
       - auth-service
+      - db-exporter
 
   grafana:
     build: ./grafana
