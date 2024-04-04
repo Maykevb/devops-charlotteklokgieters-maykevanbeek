@@ -1,15 +1,6 @@
 version: '3.8'
 
 services:
-  prometheus:
-    image: prom/prometheus:latest
-    volumes:
-      - ./prometheus:/data/prometheus
-      - prometheus-data:/prometheus
-    ports:
-      - "9090:9090"
-    command: --web.enable-lifecycle --config.file=/data/prometheus/prometheus.yml
-
   rabbitmq:
     image: rabbitmq:latest
     hostname: "rabbitmq"
@@ -68,10 +59,25 @@ services:
       AUTH_MONGO_URL: mongodb://mongodb:27017/devops-auth-service
       AMQP_URL: amqp://rabbitmq:5672
 
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus:/data/prometheus
+      - prometheus-data:/prometheus
+    ports:
+      - "9090:9090"
+    command: --web.enable-lifecycle --config.file=/data/prometheus/prometheus.yml
+    depends_on:
+      - mongodb
+      - register-service
+      - auth-service
+
   grafana:
     build: ./grafana
     ports:
       - "3000:3000"
+    depends_on:
+      - prometheus
 
 volumes:
   prometheus-data:
