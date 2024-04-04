@@ -1,7 +1,7 @@
 kind: Environment
 name: preview
 type: primary
-urlHandle: testBunnyShellPreviewEnv
+urlHandle: testbunnyshelltesttest
 components:
   -
     kind: Application
