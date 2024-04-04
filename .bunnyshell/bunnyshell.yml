@@ -1,7 +1,7 @@
 kind: Environment
 name: preview
 type: primary
-urlHandle: testbunnyshelltesttest
+urlHandle: testbunnyshelltesttesttest
 components:
   -
     kind: Application
@@ -42,21 +42,6 @@ components:
         name: mongodb-data
         mount: /data/db
         subPath: ''
-  -
-    kind: Service
-    name: rabbitmq
-    dockerCompose:
-      hostname: rabbitmq
-      image: 'rabbitmq:latest'
-      labels:
-        NAME: rabbitmq
-      ports:
-        - '5672:5672'
-    hosts:
-      -
-        hostname: 'rabbitmq-{{ env.base_domain }}'
-        path: /
-        servicePort: 5672
   -
     kind: Application
     name: register-service
