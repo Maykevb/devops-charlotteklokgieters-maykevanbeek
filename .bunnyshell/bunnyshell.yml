@@ -1,7 +1,7 @@
 kind: Environment
 name: preview
 type: primary
-urlHandle: testbunnyshelltesttesttest
+urlHandle: charlotte-mayke
 components:
   -
     kind: Application
