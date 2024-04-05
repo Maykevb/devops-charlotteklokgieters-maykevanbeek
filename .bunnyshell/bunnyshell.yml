@@ -1,7 +1,7 @@
 kind: Environment
 name: preview
 type: primary
-urlHandle: charlotte-mayke
+urlHandle: charlottemayke
 components:
   -
     kind: Application
