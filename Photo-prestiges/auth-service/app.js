@@ -71,7 +71,7 @@ async function connectToRabbitMQ () {
 
 if (process.env.NODE_ENV !== 'test') {
     mongoose.connect(url)
-        .then(() => console.log('MongoDB Connected'))
+        .then(() => console.log('MongoDB Connected!'))
         .catch(err => console.log(err))
 
     connectToRabbitMQ()
